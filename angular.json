@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angalog-controller"
+    }
+  },
+  "defaultProject": "angalog-controller",
+  "cli": {
+    "analytics": false
+  }
 }
