@@ -1,3 +1,5 @@
-<div class="controller" (mousemove)="moveAnalog($event)">
+<div id="controller"
+  (mouseout)="mouseOutController($event)"
+  (mousemove)="moveAnalog($event)">
   <div id="analog" #analog></div>
 </div>

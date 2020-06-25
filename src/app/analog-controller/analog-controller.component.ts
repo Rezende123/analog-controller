@@ -37,4 +37,10 @@ export class AnalogControllerComponent implements OnInit {
     this.analog.nativeElement.style.top  = `${y}px`;
     this.analog.nativeElement.style.left = `${x}px`;
   }
+
+  mouseOutController(mouse) {
+    if (mouse.toElement.id !== 'controller' && mouse.toElement.id !== 'analog') {
+      console.log('Saiu');
+    }
+  }
 }
