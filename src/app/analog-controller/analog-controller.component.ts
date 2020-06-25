@@ -17,7 +17,7 @@ export class AnalogControllerComponent implements OnInit {
   }
 
   moveAnalog(mouse: any) {
-    if (mouse.srcElement.id === 'analog') {
+    if (mouse.srcElement.id === '_analog_') {
       return;
     }
 
@@ -39,7 +39,7 @@ export class AnalogControllerComponent implements OnInit {
   }
 
   mouseOutController(mouse) {
-    if (mouse.toElement.id !== 'controller' && mouse.toElement.id !== 'analog') {
+    if (mouse.toElement.id !== '_controller_' && mouse.toElement.id !== '_analog_') {
       console.log('Saiu');
     }
   }
