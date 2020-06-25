@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, Output, EventEmitter, HostListener } from '@angular/core';
 import { RelativeAngleService } from './services/relative-angle.service';
 
 @Component({
@@ -42,6 +42,7 @@ export class AnalogControllerComponent implements AfterViewInit {
     this.controller.style.height = this.controllerSize;
   }
 
+  @HostListener('mousemove', ['$event'])
   moveAnalog(mouse: any) {
     if (mouse.srcElement.id === '_analog_') {
       return;
@@ -77,6 +78,7 @@ export class AnalogControllerComponent implements AfterViewInit {
     this.relativeAngle = Math.floor(angle);
   }
 
+  @HostListener('mouseout', ['$event'])
   mouseOutController(mouse) {
     if (mouse.toElement.id !== '_controller_' && mouse.toElement.id !== '_analog_') {
       const controllerMiddleWidth = this.controller.clientWidth / 2;
@@ -90,5 +92,9 @@ export class AnalogControllerComponent implements AfterViewInit {
       this.setAnalogPosition(centerX, centerY);
       this.relativeAngle = null;
     }
+  }
+
+  toque() {
+    this.relativeAngle = -1;
   }
 }
