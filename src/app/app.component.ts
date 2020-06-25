@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angalog-controller';
+  angle: number;
+
+  setAngle(angle: number) {
+    this.angle = angle;
+  }
 }

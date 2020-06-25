@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { RelativeAngleService } from './services/relative-angle.service';
 
 @Component({
@@ -24,10 +24,17 @@ export class AnalogControllerComponent implements AfterViewInit {
   @Input()
   controllerSize = '200px';
 
-  angle: number;
+  @Output()
+  angle = new EventEmitter();
+
+  _relativeAngle: number;
+  set relativeAngle(newAngle: number) {
+    this._relativeAngle = newAngle;
+    this.angle.emit(newAngle);
+  }
 
   constructor(
-    private relativeAngle: RelativeAngleService
+    private relativeAngleService: RelativeAngleService
   ) { }
 
   ngAfterViewInit() {
@@ -62,13 +69,12 @@ export class AnalogControllerComponent implements AfterViewInit {
     const controllerCenterX = this.controller.clientWidth / 2;
     const controllerCenterY = this.controller.clientHeight / 2;
 
-    const angle = this.relativeAngle.calcule(
+    const angle = this.relativeAngleService.calcule(
       controllerCenterX, controllerCenterY,
       x, y
     );
 
-    console.log('Resultado: ', Math.floor(angle));
-    this.angle = Math.floor(angle);
+    this.relativeAngle = Math.floor(angle);
   }
 
   mouseOutController(mouse) {
@@ -82,6 +88,7 @@ export class AnalogControllerComponent implements AfterViewInit {
       const centerY = controllerMiddleHeight - analogMiddleHeight;
 
       this.setAnalogPosition(centerX, centerY);
+      this.relativeAngle = null;
     }
   }
 }

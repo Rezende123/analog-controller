@@ -1,0 +1,11 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content > h1 {
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+}
