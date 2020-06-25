@@ -48,7 +48,15 @@ export class AnalogControllerComponent implements AfterViewInit {
 
   mouseOutController(mouse) {
     if (mouse.toElement.id !== '_controller_' && mouse.toElement.id !== '_analog_') {
-      console.log('Saiu');
+      const controllerMiddleWidth = this.controller.nativeElement.clientWidth / 2;
+      const controllerMiddleHeight = this.controller.nativeElement.clientHeight / 2;
+      const analogMiddleHeight = this.analog.nativeElement.clientHeight / 2;
+      const analogMiddleWidth = this.analog.nativeElement.clientWidth / 2;
+
+      const centerX = controllerMiddleWidth - analogMiddleWidth;
+      const centerY = controllerMiddleHeight - analogMiddleHeight;
+
+      this.setAnalogPosition(centerX, centerY);
     }
   }
 }
