@@ -9,10 +9,16 @@ import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit } from '
 export class AnalogControllerComponent implements AfterViewInit {
 
   @ViewChild('analog')
-  analog: ElementRef;
+  _analog: ElementRef;
+  get analog() {
+    return this._analog.nativeElement;
+  }
 
   @ViewChild('controller')
-  controller: ElementRef;
+  _controller: ElementRef;
+  get controller() {
+    return this._controller.nativeElement;
+  }
 
   @Input()
   controllerSize = '200px';
@@ -20,8 +26,8 @@ export class AnalogControllerComponent implements AfterViewInit {
   constructor() { }
 
   ngAfterViewInit() {
-    this.controller.nativeElement.style.width = this.controllerSize;
-    this.controller.nativeElement.style.height = this.controllerSize;
+    this.controller.style.width = this.controllerSize;
+    this.controller.style.height = this.controllerSize;
   }
 
   moveAnalog(mouse: any) {
@@ -32,8 +38,8 @@ export class AnalogControllerComponent implements AfterViewInit {
     // Offset é a posição dentro do elemento
     const mouseX = mouse.offsetX;
     const mouseY = mouse.offsetY;
-    const analogMiddleHeight = this.analog.nativeElement.clientHeight / 2;
-    const analogMiddleWidth = this.analog.nativeElement.clientWidth / 2;
+    const analogMiddleHeight = this.analog.clientHeight / 2;
+    const analogMiddleWidth = this.analog.clientWidth / 2;
 
     const x = mouseX - analogMiddleWidth;
     const y = mouseY - analogMiddleHeight;
@@ -42,16 +48,16 @@ export class AnalogControllerComponent implements AfterViewInit {
   }
 
   setAnalogPosition(x: number, y: number) {
-    this.analog.nativeElement.style.top  = `${y}px`;
-    this.analog.nativeElement.style.left = `${x}px`;
+    this.analog.style.top  = `${y}px`;
+    this.analog.style.left = `${x}px`;
   }
 
   mouseOutController(mouse) {
     if (mouse.toElement.id !== '_controller_' && mouse.toElement.id !== '_analog_') {
-      const controllerMiddleWidth = this.controller.nativeElement.clientWidth / 2;
-      const controllerMiddleHeight = this.controller.nativeElement.clientHeight / 2;
-      const analogMiddleHeight = this.analog.nativeElement.clientHeight / 2;
-      const analogMiddleWidth = this.analog.nativeElement.clientWidth / 2;
+      const controllerMiddleWidth = this.controller.clientWidth / 2;
+      const controllerMiddleHeight = this.controller.clientHeight / 2;
+      const analogMiddleHeight = this.analog.clientHeight / 2;
+      const analogMiddleWidth = this.analog.clientWidth / 2;
 
       const centerX = controllerMiddleWidth - analogMiddleWidth;
       const centerY = controllerMiddleHeight - analogMiddleHeight;
