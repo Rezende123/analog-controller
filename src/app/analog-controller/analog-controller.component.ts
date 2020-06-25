@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit } from '@angular/core';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -6,14 +6,22 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
   templateUrl: './analog-controller.component.html',
   styleUrls: ['./analog-controller.component.css']
 })
-export class AnalogControllerComponent implements OnInit {
+export class AnalogControllerComponent implements AfterViewInit {
 
   @ViewChild('analog')
   analog: ElementRef;
 
+  @ViewChild('controller')
+  controller: ElementRef;
+
+  @Input()
+  controllerSize = '200px';
+
   constructor() { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    this.controller.nativeElement.style.width = this.controllerSize;
+    this.controller.nativeElement.style.height = this.controllerSize;
   }
 
   moveAnalog(mouse: any) {
