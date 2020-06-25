@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -8,9 +8,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnalogControllerComponent implements OnInit {
 
+  @ViewChild('analog')
+  analog: ElementRef;
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  moveAnalog(mouse: any) {
+    if (mouse.srcElement.id === 'analog') {
+      return;
+    }
+
+    // Offset é a posição dentro do elemento
+    const mouseX = mouse.offsetX;
+    const mouseY = mouse.offsetY;
+    const analogMiddleHeight = this.analog.nativeElement.clientHeight / 2;
+    const analogMiddleWidth = this.analog.nativeElement.clientWidth / 2;
+
+    const x = mouseX - analogMiddleWidth;
+    const y = mouseY - analogMiddleHeight;
+
+    this.setAnalogPosition(x, y);
+  }
+
+  setAnalogPosition(x: number, y: number) {
+    this.analog.nativeElement.style.top  = `${y}px`;
+    this.analog.nativeElement.style.left = `${x}px`;
+  }
 }
