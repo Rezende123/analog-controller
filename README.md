@@ -27,7 +27,7 @@ O tamanho default é _200px_, mas ele pode ser alterado atavés da propriedade `
 
 - Ângulo
 
-É acessado através do ```[(ngModel)]```, tendo um valor numérico e _null_ para que ele volte à posição inicial.
+É acessado através do ```[(ngModel)]```, tendo um valor numérico e _null_ para que ele volte à posição inicial. A escala de ângulos vai de 1 a 360, o que for maior ou menor que isso será convertido ao número válido mais próximo.
 
 ## Layout Adaptável
 

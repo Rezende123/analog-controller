@@ -37,6 +37,13 @@ export class AnalogControllerComponent implements AfterViewInit, ControlValueAcc
     return this._angle;
   }
   set angle(newAngle: number) {
+    if (newAngle > 360) {
+      newAngle = 360;
+    }
+    if (newAngle < 1) {
+      newAngle = 1;
+    }
+
     this._angle = newAngle;
     this.onChange(newAngle);
   }
@@ -47,14 +54,14 @@ export class AnalogControllerComponent implements AfterViewInit, ControlValueAcc
 
   writeValue(angle: number): void {
     if (angle) {
+      this.angle = angle;
+
       const diagonal = Number(this.controllerSize.split('px')[0]);
       const radius = diagonal / 2;
-      const { pointX, pointY } =  this.relativeAngleService.calculePointByAngle(radius, angle);
+      const { pointX, pointY } =  this.relativeAngleService.calculePointByAngle(radius, this.angle);
       const analogRadius = this.analog.clientWidth / 2;
 
       this.setAnalogPosition(pointX - analogRadius, pointY - analogRadius);
-
-      this.angle = angle;
     }
   }
   registerOnChange = fn => this.onChange = fn;
