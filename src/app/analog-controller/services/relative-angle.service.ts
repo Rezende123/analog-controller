@@ -71,7 +71,7 @@ export class RelativeAngleService {
       () => angle += (180 - angle) * 2
     );
 
-    return angle;
+    return ++angle;
   }
 
   calculePointByAngle(radius: number, angle: number) {

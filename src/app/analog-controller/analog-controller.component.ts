@@ -100,7 +100,7 @@ export class AnalogControllerComponent implements AfterViewInit, ControlValueAcc
       x, y
     );
 
-    this.angle = Math.floor(angle);
+    this.angle = Math.round(angle);
   }
 
   @HostListener('touchend', ['$event'])
