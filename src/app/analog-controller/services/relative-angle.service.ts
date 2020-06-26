@@ -32,4 +32,18 @@ export class RelativeAngleService {
 
     return angle;
   }
+
+  calculePointByAngle(radius: number, angle: number) {
+    const toRadians = angleDegress => angleDegress * (Math.PI / 180);
+    const cos = (hypotenuse, alpha) => Math.cos(toRadians(alpha)) * hypotenuse;
+    const sin = (hypotenuse, alpha) => Math.sin(toRadians(alpha)) * hypotenuse;
+
+    const opposite = sin(radius, angle);
+    const adjacent = cos(radius, angle);
+
+    return {
+      pointX: Math.floor(opposite),
+      pointY: Math.floor(adjacent)
+    };
+  }
 }

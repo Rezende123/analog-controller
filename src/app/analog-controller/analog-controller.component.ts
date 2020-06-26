@@ -46,7 +46,18 @@ export class AnalogControllerComponent implements AfterViewInit, ControlValueAcc
   ) { }
 
   writeValue(angle: number): void {
-    this.angle = angle;
+    if (angle) {
+      const diagonal = Number(this.controllerSize.split('px')[0]);
+      const radius = diagonal / 2;
+      const { pointX, pointY } =  this.relativeAngleService.calculePointByAngle(radius, angle);
+      const analogRadius = this.analog.clientWidth / 2;
+
+      console.log('Angle: ', angle);
+      console.log(pointX - analogRadius, pointY);
+      this.setAnalogPosition(pointX - analogRadius, pointY - analogRadius);
+
+      this.angle = angle;
+    }
   }
   registerOnChange = fn => this.onChange = fn;
 
