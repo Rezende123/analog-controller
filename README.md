@@ -25,9 +25,9 @@ import { AnalogControllerModule } from 'angalog-controller/src/app/analog-contro
 
 O tamanho default é _200px_, mas ele pode ser alterado atavés da propriedade ```controllerSize```.
 
-- Retorno do ângulo
+- Ângulo
 
-É retornado através do evento ```(angle)```, tendo um valor numérico e _null_ caso o controle deixe de ser tocado.
+É acessado através do ```[(ngModel)]```, tendo um valor numérico e _null_ para que ele volte à posição inicial.
 
 ## Layout Adaptável
 
