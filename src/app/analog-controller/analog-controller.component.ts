@@ -37,10 +37,10 @@ export class AnalogControllerComponent implements AfterViewInit, ControlValueAcc
     return this._angle;
   }
   set angle(newAngle: number) {
-    if (newAngle > 360) {
+    if (newAngle && newAngle > 360) {
       newAngle = 360;
     }
-    if (newAngle < 1) {
+    if (newAngle && newAngle < 1) {
       newAngle = 1;
     }
 
