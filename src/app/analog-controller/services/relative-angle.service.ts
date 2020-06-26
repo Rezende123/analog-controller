@@ -1,11 +1,58 @@
 import { Injectable } from '@angular/core';
 
+enum Quadrants {
+  first,
+  secund,
+  third,
+  quarter
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class RelativeAngleService {
 
+  private quadrant: Quadrants;
+
   constructor() { }
+
+  setQuadrant(isSecund, isThird, isQuarter) {
+    if (isSecund) {
+      this.quadrant = Quadrants.secund;
+    } else
+    if (isThird) {
+      this.quadrant = Quadrants.third;
+    } else
+    if (isQuarter) {
+      this.quadrant = Quadrants.quarter;
+    } else {
+      this.quadrant = Quadrants.first;
+    }
+  }
+
+  setQuadrantByCoordinates(centerX, centerY, endX, endY) {
+    const isSecund = centerX < endX && centerY > endY;
+    const isThird = centerX < endX && centerY < endY;
+    const isQuarter = centerX > endX && centerY < endY;
+
+    this.setQuadrant(isSecund, isThird, isQuarter);
+  }
+
+  setQuadrantByAngle(angle) {
+    const isSecund = angle > 90 && angle <= 180;
+    const isThird = angle > 180 && angle <= 270;
+    const isQuarter = angle > 270;
+
+    this.setQuadrant(isSecund, isThird, isQuarter);
+  }
+
+  operationByQuadrant = (opSecund, opThird, opQuarter) => {
+    switch (this.quadrant) {
+      case Quadrants.secund: opSecund(); return;
+      case Quadrants.third: opThird(); return;
+      case Quadrants.quarter: opQuarter(); return;
+    }
+  }
 
   calcule(centerX, centerY, endX, endY) {
     const adjacent = (centerX > endX) ?
@@ -16,37 +63,25 @@ export class RelativeAngleService {
     const angleOfTangent = (catO, catA) => Math.atan(catO / catA) * 180 / Math.PI;
     let angle = angleOfTangent(opposite, adjacent);
 
-    const isSecundQuadrant = centerX < endX && centerY > endY;
-    const isThirdQuadrant = centerX < endX && centerY < endY;
-    const isQuarterQuadrant = centerX > endX && centerY < endY;
+    this.setQuadrantByCoordinates(centerX, centerY, endX, endY);
 
-    if (isSecundQuadrant) {
-      angle += 90;
-    } else
-    if (isThirdQuadrant) {
-      angle += 180;
-    } else
-    if (isQuarterQuadrant) {
-      angle += 270;
-    }
+    this.operationByQuadrant(
+      () => angle += 90,
+      () => angle += 180,
+      () => angle += 270
+    );
 
     return angle;
   }
 
   calculePointByAngle(radius: number, angle: number) {
-    const isSecundQuadrant = angle > 90 && angle <= 180;
-    const isThirdQuadrant = angle > 180 && angle <= 270;
-    const isQuarterQuadrant = angle > 270;
+    this.setQuadrantByAngle(angle);
 
-    if (isSecundQuadrant) {
-      angle -= 90;
-    } else
-    if (isThirdQuadrant) {
-      angle -= 180;
-    } else
-    if (isQuarterQuadrant) {
-      angle -= 270;
-    }
+    this.operationByQuadrant(
+      () => angle -= 90,
+      () => angle -= 180,
+      () => angle -= 270
+    );
 
     const toRadians = angleDegress => angleDegress * (Math.PI / 180);
     const cos = (hypotenuse, alpha) => Math.cos(toRadians(alpha)) * hypotenuse;
@@ -55,28 +90,30 @@ export class RelativeAngleService {
     let opposite = sin(radius, angle);
     let adjacent = cos(radius, angle);
 
-    if (isSecundQuadrant) {
-      const aux = opposite;
-      opposite = adjacent;
-      adjacent = aux;
+    this.operationByQuadrant(
+      () => {
+        const aux = opposite;
+        opposite = adjacent;
+        adjacent = aux;
 
-      opposite += (radius / 2) + adjacent;
-    } else
-    if (isThirdQuadrant) {
-      const aux = opposite;
-      opposite = adjacent;
-      adjacent = aux;
+        opposite += (radius / 2) + adjacent;
+      },
+      () => {
+        const aux = opposite;
+        opposite = adjacent;
+        adjacent = aux;
 
-      opposite += radius;
-      adjacent += radius;
-    } else
-    if (isQuarterQuadrant) {
-      const aux = opposite;
-      opposite = adjacent;
-      adjacent = aux;
+        opposite += radius;
+        adjacent += radius;
+      },
+      () => {
+        const aux = opposite;
+        opposite = adjacent;
+        adjacent = aux;
 
-      adjacent = (2 * radius) - adjacent;
-    }
+        adjacent = (2 * radius) - adjacent;
+      }
+    );
 
     return {
       pointX: Math.floor(opposite),
