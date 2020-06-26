@@ -78,9 +78,13 @@ export class AnalogControllerComponent implements AfterViewInit {
     this.relativeAngle = Math.floor(angle);
   }
 
+  @HostListener('touchend', ['$event'])
   @HostListener('mouseout', ['$event'])
   mouseOutController(mouse) {
-    if (mouse.toElement.id !== '_controller_' && mouse.toElement.id !== '_analog_') {
+    if (
+      mouse.toElement && mouse.toElement.id !== '_controller_' && mouse.toElement.id !== '_analog_' ||
+      !mouse.toElement
+    ) {
       const controllerMiddleWidth = this.controller.clientWidth / 2;
       const controllerMiddleHeight = this.controller.clientHeight / 2;
       const analogMiddleHeight = this.analog.clientHeight / 2;
@@ -94,7 +98,33 @@ export class AnalogControllerComponent implements AfterViewInit {
     }
   }
 
-  toque() {
-    this.relativeAngle = -1;
+  @HostListener('touchmove', ['$event'])
+  prepareEventToMoveAnalog(event) {
+    const touch = event.touches[0];
+    const { clientWidth, clientHeight } = this.controller;
+
+    const controllerMiddleWidth = clientWidth / 2;
+    const controllerMiddleHeight = clientHeight / 2;
+    const analogMiddleHeight = this.analog.clientHeight / 2;
+
+    event.offsetX = touch.clientX - controllerMiddleWidth;
+    event.offsetY = touch.clientY - controllerMiddleHeight - analogMiddleHeight;
+
+    const validateOffset = (offset, limit) => {
+      limit -= analogMiddleHeight;
+      if (offset > limit) {
+        return limit;
+      } else
+      if (offset <= 0) {
+        return analogMiddleHeight;
+      } else {
+        return offset;
+      }
+    };
+
+    event.offsetX = validateOffset(event.offsetX, clientWidth);
+    event.offsetY = validateOffset(event.offsetY, clientHeight);
+
+    this.moveAnalog(event);
   }
 }
