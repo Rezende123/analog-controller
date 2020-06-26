@@ -2,6 +2,33 @@
 
 Controle analógico feito em angular, que interage com eventos do mouse e de toque, layout com base no neomorfismo, a cor se adapta à cor de fundo do layout em que é implantado, o tamanho pode ser definido por parâmetro. A resposta é um angulo de 0º a 360º, com base no lado esquerdo e indo em sentido horário.
 
+## Instalação
+
+Instalavel via npm em aplicações angular, ele é uma div que que se adapta a um elemento pai. Para instalar:
+```
+npm i angalog-controller
+```
+
+E colocar ele no módulo da sua aplicação:
+```
+import { AnalogControllerModule } from 'analog-controller/analog-controller.module';
+    ...
+    imports: [
+        ...
+        AnalogControllerModule,
+        ...
+    ],
+    ...
+```
+
+- Tamanho
+
+O tamanho default é _200px_, mas ele pode ser alterado atavés da propriedade ```controllerSize```.
+
+- Retorno do ângulo
+
+É retornado através do evento ```(angle)```, tendo um valor numérico e _null_ caso o controle deixe de ser tocado.
+
 ## Layout Adaptável
 
 - Dark
