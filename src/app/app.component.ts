@@ -7,8 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   angle: number;
-
-  setAngle(angle: number) {
-    this.angle = angle;
-  }
 }

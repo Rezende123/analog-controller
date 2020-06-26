@@ -1,5 +1,5 @@
 <main class="content">
-    <analog-controller (angle)="setAngle($event)">
+    <analog-controller [(ngModel)]="angle">
     </analog-controller>
     <h1> {{angle || 'Soltou o controle'}} </h1>
 </main>

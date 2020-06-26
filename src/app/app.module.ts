@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AnalogControllerModule } from './analog-controller/analog-controller.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -10,6 +11,7 @@ import { AnalogControllerModule } from './analog-controller/analog-controller.mo
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AnalogControllerModule
   ],
   providers: [],

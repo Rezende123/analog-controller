@@ -1,13 +1,19 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, AfterViewInit, HostListener } from '@angular/core';
 import { RelativeAngleService } from './services/relative-angle.service';
-
+import { forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   // tslint:disable-next-line: component-selector
   selector: 'analog-controller',
   templateUrl: './analog-controller.component.html',
-  styleUrls: ['./analog-controller.component.css']
+  styleUrls: ['./analog-controller.component.css'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => AnalogControllerComponent),
+    multi: true
+  }]
 })
-export class AnalogControllerComponent implements AfterViewInit {
+export class AnalogControllerComponent implements AfterViewInit, ControlValueAccessor {
 
   @ViewChild('analog')
   _analog: ElementRef;
@@ -24,18 +30,28 @@ export class AnalogControllerComponent implements AfterViewInit {
   @Input()
   controllerSize = '200px';
 
-  @Output()
-  angle = new EventEmitter();
+  onChange: any = () => {};
 
-  _relativeAngle: number;
-  set relativeAngle(newAngle: number) {
-    this._relativeAngle = newAngle;
-    this.angle.emit(newAngle);
+  _angle: number;
+  get angle() {
+    return this._angle;
+  }
+  set angle(newAngle: number) {
+    this._angle = newAngle;
+    this.onChange(newAngle);
   }
 
   constructor(
     private relativeAngleService: RelativeAngleService
   ) { }
+
+  writeValue(angle: number): void {
+    this.angle = angle;
+  }
+  registerOnChange = fn => this.onChange = fn;
+
+  registerOnTouched(fn: any): void {}
+  setDisabledState?(isDisabled: boolean): void {}
 
   ngAfterViewInit() {
     this.controller.style.width = this.controllerSize;
@@ -75,7 +91,7 @@ export class AnalogControllerComponent implements AfterViewInit {
       x, y
     );
 
-    this.relativeAngle = Math.floor(angle);
+    this.angle = Math.floor(angle);
   }
 
   @HostListener('touchend', ['$event'])
@@ -94,7 +110,7 @@ export class AnalogControllerComponent implements AfterViewInit {
       const centerY = controllerMiddleHeight - analogMiddleHeight;
 
       this.setAnalogPosition(centerX, centerY);
-      this.relativeAngle = null;
+      this.angle = null;
     }
   }
 
