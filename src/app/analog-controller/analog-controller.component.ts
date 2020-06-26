@@ -57,7 +57,7 @@ export class AnalogControllerComponent implements AfterViewInit {
     const x = mouseX - analogMiddleWidth;
     const y = mouseY - analogMiddleHeight;
 
-    this.getAngleRelative(mouseX, mouseY);
+    this.defineRelativeAngle(mouseX, mouseY);
     this.setAnalogPosition(x, y);
   }
 
@@ -66,7 +66,7 @@ export class AnalogControllerComponent implements AfterViewInit {
     this.analog.style.left = `${x}px`;
   }
 
-  getAngleRelative(x: number, y: number) {
+  defineRelativeAngle(x: number, y: number) {
     const controllerCenterX = this.controller.clientWidth / 2;
     const controllerCenterY = this.controller.clientHeight / 2;
 
@@ -80,10 +80,10 @@ export class AnalogControllerComponent implements AfterViewInit {
 
   @HostListener('touchend', ['$event'])
   @HostListener('mouseout', ['$event'])
-  mouseOutController(mouse) {
+  outController(mouse) {
     if (
-      mouse.toElement && mouse.toElement.id !== '_controller_' && mouse.toElement.id !== '_analog_' ||
-      !mouse.toElement
+      !mouse.toElement ||
+      mouse.toElement && mouse.toElement.id !== '_controller_' && mouse.toElement.id !== '_analog_'
     ) {
       const controllerMiddleWidth = this.controller.clientWidth / 2;
       const controllerMiddleHeight = this.controller.clientHeight / 2;
