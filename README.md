@@ -5,20 +5,25 @@ Controle analógico feito em angular, que interage com eventos do mouse e de toq
 ## Layout Adaptável
 
 - Dark
+
 ![Controle cor preta](./src/assets/imgs/controller1.png)
 
 - Azul
+
 ![Controle cor azul](./src/assets/imgs/controller2.png)
 
 - Verde
+
 ![Controle cor verde](./src/assets/imgs/controllerw.png)
 
 ## Funcionamento
 
 - Web
+
 ![Controle sendo utilizado com o mouse](./src/assets/imgs/exempleWeb.gif)
 
 - Mobile
+
 ![Controle sendo utilizado com o mouse](./src/assets/imgs/exempleMobile.gif)
 
 ## Lógica
