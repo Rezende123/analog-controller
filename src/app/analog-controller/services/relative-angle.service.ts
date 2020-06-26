@@ -66,9 +66,9 @@ export class RelativeAngleService {
     this.setQuadrantByCoordinates(centerX, centerY, endX, endY);
 
     this.operationByQuadrant(
-      () => angle += 90,
+      () => angle += (90 - angle) * 2,
       () => angle += 180,
-      () => angle += 270
+      () => angle += (180 - angle) * 2
     );
 
     return angle;

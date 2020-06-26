@@ -52,8 +52,6 @@ export class AnalogControllerComponent implements AfterViewInit, ControlValueAcc
       const { pointX, pointY } =  this.relativeAngleService.calculePointByAngle(radius, angle);
       const analogRadius = this.analog.clientWidth / 2;
 
-      console.log('Angle: ', angle);
-      console.log(pointX - analogRadius, pointY);
       this.setAnalogPosition(pointX - analogRadius, pointY - analogRadius);
 
       this.angle = angle;
