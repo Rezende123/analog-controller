@@ -11,7 +11,7 @@ npm i angalog-controller
 
 E colocar ele no módulo da sua aplicação:
 ```
-import { AnalogControllerModule } from 'analog-controller/analog-controller.module';
+import { AnalogControllerModule } from 'angalog-controller/src/app/analog-controller/analog-controller.module';
     ...
     imports: [
         ...
