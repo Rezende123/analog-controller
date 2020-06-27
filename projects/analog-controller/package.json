@@ -1,0 +1,30 @@
+{
+  "name": "analog-controller",
+  "version": "1.2.1",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+  },
+  "author": "Felipe Rezende",
+  "homepage": "https://github.com/Rezende123/analog-controller",
+  "private": false,
+  "keywords": [
+    "controller",
+    "angular game",
+    "neomorphism",
+    "analogic",
+    "stick"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rezende123/analog-controller.git"
+  },
+  "peerDependencies": {
+    "@angular/core": "~9.1.0",
+    "@angular/forms": "~9.1.0"
+  }
+}
